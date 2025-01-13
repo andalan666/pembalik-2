@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Two-Digit Numbers</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        input {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reverse Two-Digit Numbers</h1>
+    <p>Masukkan angka-angka dua digit yang dipisahkan oleh koma atau bintang:</p>
+    <input type="text" id="inputNumbers" placeholder="Contoh: 12,34 atau 54*12">
+    <button onclick="pasteToInput()">Tempel ke Kolom</button>
+    <button onclick="reverseNumbers()">Balikkan Angka</button>
+
+    <h2>Hasil:</h2>
+    <div id="result"></div>
+    <button onclick="copyResult()" style="margin-top: 10px;">Salin Hasil</button>
+
+    <script>
+        function reverseNumbers() {
+            const input = document.getElementById('inputNumbers').value;
+            
+            // Split the input using koma (,) atau bintang (*)
+            const numbers = input.split(/[,\*]/);
+
+            // Process each number to reverse it
+            const reversedNumbers = numbers.map(num => {
+                if (num.length === 2 && !isNaN(num)) {
+                    return num.split('').reverse().join('');
+                } else {
+                    return `"${num}"tidakvalid`;
+                }
+            });
+
+            // Display the result
+            document.getElementById('result').innerText = reversedNumbers.join(',');
+        }
+
+        function copyResult() {
+            const resultText = document.getElementById('result').innerText;
+            navigator.clipboard.writeText(resultText).then(() => {
+                alert('Hasil berhasil disalin!');
+            }).catch(err => {
+                alert('Gagal menyalin teks: ' + err);
+            });
+        }
+
+        function pasteToInput() {
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('inputNumbers').value = text;
+            }).catch(err => {
+                alert('Gagal menempel teks: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
